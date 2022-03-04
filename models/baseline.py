@@ -6,6 +6,7 @@ from models.base_model import TrashBaseClass
 
 class TrashBaseline(TrashBaseClass):
     def __init__(self, *args, **kwargs):
+        super().__init__()
         self.net = nn.Sequential(
             nn.Flatten(),
             nn.Linear(config.IMAGE_SIZE * config.IMAGE_SIZE *
@@ -18,7 +19,3 @@ class TrashBaseline(TrashBaseClass):
 
     def forward(self, x):
         return self.net(x)
-
-
-def trash_baseline(*args, **kwargs):
-    return TrashBaseline(*args, **kwargs)

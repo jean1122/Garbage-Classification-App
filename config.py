@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 50
+NUM_RUNS = 10
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 
@@ -33,8 +33,11 @@ SWEEP_CONFIG = {
     },
     "parameters": {
         "model": {
-            "values": ["resnet50", "efficientnet_b0", "efficientnet_b1", "efficientnet_b2"]
+            "values": ["efficientnet_b0"]
         },
+        # "model": {
+        #     "values": ["resnet101", "efficientnet_b0", "efficientnet_b1", "efficientnet_b2"]
+        # },
         "batch_size": {
             "values": [16, 32, 64, 128]
         },

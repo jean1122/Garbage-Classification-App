@@ -8,15 +8,16 @@ from torch.utils.data import DataLoader
 import config
 import pytorch_lightning as pl
 
+
 class DataAugmentation(nn.Module):
-    def __init__(self, apply_color_jitter = False, apply_random_augment = True, *args, **kwarrgs):
+    def __init__(self, apply_color_jitter=False, apply_random_augment=True, *args, **kwarrgs):
         super().__init__()
         self._apply_color_jitter = apply_color_jitter
         self._apply_random_augment = apply_random_augment
-        
+
         self.rand_augment = transforms.RandAugment(*args, **kwarrgs)
         self.jitter = transforms.ColorJitter(0.5, 0.5, 0.5, 0.5)
-    
+
     @torch.no_grad()
     def forward(self, x):
         if self._apply_color_jitter:
@@ -25,8 +26,10 @@ class DataAugmentation(nn.Module):
             x = self.rand_augment(x)
         return x
 
+
 class TrashNetDataModule(pl.LightningDataModule):
-    def __init__(self, transfer_learning=False, augment=True, data_dir=config.ROOT_DIR, batch_size=config.BATCH_SIZE, num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY):
+    def __init__(self, transfer_learning=False, augment=True, data_dir=config.ROOT_DIR, batch_size=config.BATCH_SIZE,
+                 num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY):
         super().__init__()
         self.data_dir = data_dir
         self.batch_size = batch_size
@@ -36,7 +39,7 @@ class TrashNetDataModule(pl.LightningDataModule):
         self.image_size = 224 if transfer_learning else config.IMAGE_SIZE
         # mean and standard deviations computed using seed = 42
         self.mean, self.std = (
-            0.5389, 0.5123, 0.4846), (0.2201, 0.2178, 0.2323)
+                                  0.5389, 0.5123, 0.4846), (0.2201, 0.2178, 0.2323)
 
         self.augmentation = DataAugmentation()
 
@@ -74,13 +77,15 @@ class TrashNetDataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         transform = [self.augmentation] if self.augment else []
-        transform = transforms.Compose(transform + [
+        transform += [
             transforms.Resize((self.image_size, self.image_size)),
             transforms.ToTensor(),
             transforms.Normalize(self.mean, self.std)
-        ])
+        ]
+        transform = transforms.Compose(transform)
         dataset = datasets.ImageFolder(config.ROOT_DIR, transform=transform)
-        return DataLoader(dataset, batch_size=self.batch_size, sampler=self.train_sampler, num_workers=self.num_workers, pin_memory=self.pin_memory)
+        return DataLoader(dataset, batch_size=self.batch_size, sampler=self.train_sampler, num_workers=self.num_workers,
+                          pin_memory=self.pin_memory)
 
     def val_dataloader(self):
         transform = transforms.Compose([
@@ -102,4 +107,46 @@ class TrashNetDataModule(pl.LightningDataModule):
         return DataLoader(dataset, batch_size=self.batch_size,
                           sampler=self.test_sampler, num_workers=self.num_workers, pin_memory=self.pin_memory)
 
-    
+
+class TrashNetDataModuleWithResized(pl.LightningDataModule):
+    def __init__(self, transfer_learning=False, augment=True, data_dir=config.ROOT_DIR, batch_size=config.BATCH_SIZE,
+                 num_workers=config.NUM_WORKERS, pin_memory=config.PIN_MEMORY):
+        super().__init__()
+        self.data_dir = data_dir
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+        self.pin_memory = pin_memory
+        self.augment = augment
+        self.image_size = 224 if transfer_learning else config.IMAGE_SIZE
+        # mean and standard deviations computed using seed = 42
+        self.mean, self.std = (0.5389, 0.5123, 0.4846), (0.2201, 0.2178, 0.2323)
+        self.augmentation = DataAugmentation()
+
+    def train_dataloader(self):
+        transform = [self.augmentation] if self.augment else []
+        transform += [
+            transforms.Resize((self.image_size, self.image_size)),
+            transforms.ToTensor(),
+            transforms.Normalize(self.mean, self.std)
+        ]
+        transform = transforms.Compose(transform)
+        dataset = datasets.ImageFolder('SortedResizedDataset-70-10-20/train', transform=transform)
+        return DataLoader(dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=self.pin_memory)
+
+    def val_dataloader(self):
+        transform = transforms.Compose([
+            transforms.Resize((self.image_size, self.image_size)),
+            transforms.ToTensor(),
+            transforms.Normalize(self.mean, self.std)
+        ])
+        dataset = datasets.ImageFolder('SortedResizedDataset-70-10-20/validation', transform=transform)
+        return DataLoader(dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=self.pin_memory)
+
+    def test_dataloader(self):
+        transform = transforms.Compose([
+            transforms.Resize((self.image_size, self.image_size)),
+            transforms.ToTensor(),
+            transforms.Normalize(self.mean, self.std)
+        ])
+        dataset = datasets.ImageFolder('SortedResizedDataset-70-10-20/test', transform=transform)
+        return DataLoader(dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=self.pin_memory)

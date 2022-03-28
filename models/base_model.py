@@ -24,10 +24,10 @@ class TrashBaseClass(pl.LightningModule):
         temp = torch.zeros(x.size(0), config.NUM_CLASSES).type_as(ref)
         return temp.scatter_(1, x.unsqueeze(1), 1.0)
 
-    def save_metrics(self, metric, mode, pred, labels, loss, on_step, on_epoch):
+    def save_metrics(self, metric, mode, pred, labels, loss):
         metric(pred, labels)
         metrics = {f'{mode}_accuracy': metric, f'{mode}_loss': loss}
-        self.log_dict(metrics, on_step=on_step, on_epoch=on_epoch)
+        self.log_dict(metrics)
         return metrics
 
     def configure_optimizers(self):
@@ -66,18 +66,15 @@ class TrashBaseClass(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         pred, loss, labels = self.forward_step(batch)
-        self.save_metrics(self.train_accuracy, 'train', pred, labels, loss,
-                          config.LOG_TRAIN_STEP_ACCURACY, config.LOG_TRAIN_EPOCH_ACCURACY)
+        self.save_metrics(self.train_accuracy, 'train', pred, labels, loss)
         return loss
 
     def validation_step(self, batch, batch_idx):
         pred, loss, labels = self.forward_step(batch)
-        metrics = self.save_metrics(self.val_accuracy, 'val', pred, labels, loss,
-                                    config.LOG_VAL_STEP_ACCURACY, config.LOG_VAL_EPOCH_ACCURACY)
+        metrics = self.save_metrics(self.val_accuracy, 'val', pred, labels, loss)
         return metrics
 
     def test_step(self, batch, batch_idx):
         pred, loss, labels = self.forward_step(batch)
-        self.test_accuracy(pred, labels)
-        metrics = {f'test_accuracy': self.accuracy, f'test_loss': loss}
+        metrics = self.save_metrics(self.test_accuracy, 'test', pred, labels, loss)
         return metrics

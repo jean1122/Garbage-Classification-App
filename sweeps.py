@@ -1,11 +1,10 @@
 import torch
 import matplotlib.pyplot as plt
-import config
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
-from dataset import TrashNetDataModule
+from dataset import *
 import wandb
 import models
 
@@ -18,8 +17,8 @@ wandb.login()
 
 
 def check_models_exist(sweep_config):
-    model_list = sweep_config['parameters']['model']['values']
-    assert all([model_name in model_dict for model_name in model_list])
+    model_name = sweep_config['parameters']['model']['value']
+    assert model_name in model_dict
 
 
 def sweep_iteration():
@@ -29,14 +28,13 @@ def sweep_iteration():
     model_cls = model_dict[wandb.config.model]
     model = model_cls(lr=wandb.config.lr)
 
-    dm = TrashNetDataModule(
+    dm = TrashNetDataModuleWithResized(
         transfer_learning=model_cls.transfer_learning, batch_size=wandb.config.batch_size)
 
-    stop_checkpoint = EarlyStopping('val_loss')
-    wandb_logger.watch(model)
+    stop_checkpoint = EarlyStopping('val_loss', patience=8)
     trainer = pl.Trainer(max_epochs=config.EPOCHS, logger=wandb_logger, gpus=config.NUM_GPUS,
                          log_every_n_steps=config.LOG_EVERY_N_STEPS, callbacks=[stop_checkpoint], profiler="simple")
-
+    wandb.watch(model)
     trainer.fit(model, dm)
 
 

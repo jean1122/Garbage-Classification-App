@@ -1,4 +1,4 @@
-NUM_WORKERS = 6
+NUM_WORKERS = 4
 EPOCHS = 200
 BATCH_SIZE = 64
 VAL_SPLIT = 0.1
@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 10
+NUM_RUNS = 20
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 
@@ -33,13 +33,10 @@ SWEEP_CONFIG = {
     },
     "parameters": {
         "model": {
-            "values": ["efficientnet_b0"]
+            "value": "vit_b16"
         },
-        # "model": {
-        #     "values": ["resnet101", "efficientnet_b0", "efficientnet_b1", "efficientnet_b2"]
-        # },
         "batch_size": {
-            "values": [16, 32, 64, 128]
+            "values": [16, 32, 64]
         },
         "lr": {
             # log uniform distribution between exp(min) and exp(max)

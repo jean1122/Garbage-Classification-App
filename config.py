@@ -32,7 +32,8 @@ SWEEP_ID = {
     'vit_b16': '86a3oe18',
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
-    'efficientnet_b0': 'rwb5lurg'
+    'efficientnet_b0': 'rwb5lurg',
+    'convnext_tiny': 'cdhofwn6'
 }
 
 SWEEP_CONFIG = {
@@ -43,7 +44,7 @@ SWEEP_CONFIG = {
     },
     "parameters": {
         "model": {
-            "value": "vit_b16"
+            "value": "convnext_tiny"
         },
         "batch_size": {
             "values": [16, 32, 64]

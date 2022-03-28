@@ -21,10 +21,14 @@ class TrashResnet(TrashBaseClass):
         num_target_classes = config.NUM_CLASSES
         self.classifier = nn.Linear(num_filters, num_target_classes)
 
-    def forward(self, x):
+    def get_features(self, x):
         self.feature_extractor.eval()
         with torch.no_grad():
-            representations = self.feature_extractor(x).flatten(1)
+            x = self.feature_extractor(x).flatten(1)
+        return x
+
+    def forward(self, x):
+        representations = self.get_features(x)
         x = self.classifier(representations)
         return x
 

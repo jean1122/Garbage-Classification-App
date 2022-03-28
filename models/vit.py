@@ -36,13 +36,16 @@ class TrashVit(TrashBaseClass):
         self.backbone.heads[-1] = nn.Identity(num_filters, num_filters)
         self.classifier = nn.Linear(num_filters, num_target_classes)
 
-    def forward(self, x):
+    def get_features(self, x):
         self.backbone.eval()
         with torch.no_grad():
-            representations = self.backbone(x).flatten(1)
-        x = self.classifier(representations)
+            x = self.backbone(x).flatten(1)
         return x
 
+    def forward(self, x):
+        representations = self.get_features(x)
+        x = self.classifier(representations)
+        return x
 
 class TrashVitB16(TrashVit):
     def __init__(self, *args, **kwargs):

@@ -17,8 +17,8 @@ wandb.login()
 
 
 def check_models_exist(sweep_config):
-    model_name = sweep_config['parameters']['model']['value']
-    assert model_name in model_dict
+    name = sweep_config['parameters']['model']['value']
+    assert name in model_dict
 
 
 def sweep_iteration():
@@ -39,5 +39,10 @@ def sweep_iteration():
 
 
 check_models_exist(config.SWEEP_CONFIG)
-sweep_id = wandb.sweep(config.SWEEP_CONFIG, project=config.PROJECT_NAME)
+
+model_name = config.SWEEP_CONFIG['parameters']['model']['value']
+if model_name in config.SWEEP_ID:
+    sweep_id = f'{config.PROJECT_NAME}/{config.SWEEP_ID[model_name]}'
+else:
+    sweep_id = wandb.sweep(config.SWEEP_CONFIG, project=config.PROJECT_NAME)
 wandb.agent(sweep_id, function=sweep_iteration, count=config.NUM_RUNS)

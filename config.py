@@ -25,6 +25,16 @@ ROOT_DIR = '/mnt/d/Datasets/trashnet/resized'
 
 PROJECT_NAME = 'trash-ai'
 
+# Dictionary that stores the W&B sweep ids. After training a model,
+# place the model name and sweep id in this dictionary, so that the same
+# model can be run with the same sweep
+SWEEP_ID = {
+    'vit_b16': '86a3oe18',
+    'efficientnet_b7': 'gnijdvsm',
+    'efficientnet_b1' : 'dz3xe8aj',
+    'efficientnet_b0': 'rwb5lurg'
+}
+
 SWEEP_CONFIG = {
     "method": "bayes",
     "metric": {

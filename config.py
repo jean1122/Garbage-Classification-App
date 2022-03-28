@@ -1,4 +1,4 @@
-NUM_WORKERS = 4
+NUM_WORKERS = 0
 EPOCHS = 200
 BATCH_SIZE = 64
 VAL_SPLIT = 0.1
@@ -29,11 +29,14 @@ PROJECT_NAME = 'trash-ai'
 # place the model name and sweep id in this dictionary, so that the same
 # model can be run with the same sweep
 SWEEP_ID = {
-    'vit_b16': '86a3oe18',
+    'baseline': 'bw2k0kvv',
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
-    'convnext_tiny': 'cdhofwn6'
+    'convnext_tiny': 'cdhofwn6',
+    'convnext_base': 'jl4l1frd',
+    'convnext_large': '9rrdpjzq',
+    'vit_b16': '86a3oe18',
 }
 
 SWEEP_CONFIG = {
@@ -44,7 +47,7 @@ SWEEP_CONFIG = {
     },
     "parameters": {
         "model": {
-            "value": "convnext_tiny"
+            "value": "convnext_base"
         },
         "batch_size": {
             "values": [16, 32, 64]

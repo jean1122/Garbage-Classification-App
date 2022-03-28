@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 import config
 from models.base_model import TrashBaseClass
@@ -10,9 +9,11 @@ class TrashBaseline(TrashBaseClass):
         self.net = nn.Sequential(
             nn.Flatten(),
             nn.Linear(config.IMAGE_SIZE * config.IMAGE_SIZE *
-                      config.INPUT_CHANNELS, 32),
+                      config.INPUT_CHANNELS, 64),
             nn.ReLU(),
-            nn.Linear(32, 64),
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
             nn.ReLU(),
             nn.Linear(64, config.NUM_CLASSES)
         )

@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from dataset import *
 import models
-from models import TrashBaseline
 
 torch.manual_seed(42)
 

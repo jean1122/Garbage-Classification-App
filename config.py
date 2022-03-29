@@ -1,4 +1,4 @@
-NUM_WORKERS = 0
+NUM_WORKERS = 2
 EPOCHS = 200
 BATCH_SIZE = 64
 VAL_SPLIT = 0.1
@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 12
+NUM_RUNS = 6
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 
@@ -31,6 +31,7 @@ PROJECT_NAME = 'trash-ai'
 SWEEP_ID = {
     'baseline': 'bw2k0kvv',
     'efficientnet_b7': 'gnijdvsm',
+    'efficientnet_b4': 'qr5yn1g1',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
     'resnet152': '7urzgc8j',
@@ -41,7 +42,11 @@ SWEEP_ID = {
     'vit_b16': '86a3oe18'
 }
 
+# model_name = 'efficientnet_b1'
 model_name = 'efficientnet_b4'
+# model_name = 'resnet34'
+# model_name = 'convnext_small'
+# model_name = 'resnet101'
 
 SWEEP_CONFIG = {
     "method": "bayes",

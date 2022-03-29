@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 15
+NUM_RUNS = 13
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 WANDB_USERNAME = "Richard"
@@ -35,6 +35,7 @@ SWEEP_ID = {
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
     'resnet34': 'auizwl1t',
+    'resnet101': 'ldzbq1p8',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     'convnext_small': 'c22earkk',
@@ -43,7 +44,7 @@ SWEEP_ID = {
     'vit_b16': '86a3oe18'
 }
 
-model_name = 'resnet101'
+model_name = 'convnext_small'
 
 SWEEP_CONFIG = {
     "method": "bayes",

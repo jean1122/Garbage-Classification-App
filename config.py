@@ -32,19 +32,19 @@ PROJECT_NAME = 'trash-ai'
 SWEEP_ID = {
     'baseline': 'bw2k0kvv',
     'efficientnet_b7': 'gnijdvsm',
-    'efficientnet_b1' : 'dz3xe8aj',
+    # 'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
     'resnet34': 'auizwl1t',
     'resnet101': 'ldzbq1p8',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
-    'convnext_small': 'c22earkk',
+    # 'convnext_small': 'c22earkk',
     'convnext_base': 'jl4l1frd',
     'convnext_large': '9rrdpjzq',
     'vit_b16': '86a3oe18'
 }
 
-model_name = 'convnext_small'
+model_name = 'efficientnet_b1'
 
 SWEEP_CONFIG = {
     "method": "bayes",

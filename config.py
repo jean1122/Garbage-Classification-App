@@ -34,6 +34,7 @@ SWEEP_ID = {
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
+    'resnet34': 'auizwl1t',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     'convnext_small': 'c22earkk',
@@ -42,7 +43,7 @@ SWEEP_ID = {
     'vit_b16': '86a3oe18'
 }
 
-model_name = 'resnet34'
+model_name = 'resnet101'
 
 SWEEP_CONFIG = {
     "method": "bayes",

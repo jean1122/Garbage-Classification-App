@@ -1,0 +1,8 @@
+wandb_version: 1
+
+batch_size:
+  value: 32
+lr:
+  value: 0.0007154553781808218
+model:
+  value: efficientnet_b4

@@ -24,6 +24,7 @@ def check_models_exist(sweep_config):
 def sweep_iteration():
     wandb.init()  # required to have access to `wandb.config`
     wandb_logger = WandbLogger()
+    entity='trash-ai'
 
     model_cls = model_dict[wandb.config.model]
     model = model_cls(lr=wandb.config.lr)

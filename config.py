@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 20
+NUM_RUNS = 19
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 
@@ -33,11 +33,15 @@ SWEEP_ID = {
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
+    'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
+    'convnext_small': 'c22earkk',
     'convnext_base': 'jl4l1frd',
     'convnext_large': '9rrdpjzq',
-    'vit_b16': '86a3oe18',
+    'vit_b16': '86a3oe18'
 }
+
+model_name = 'resnet152'
 
 SWEEP_CONFIG = {
     "method": "bayes",
@@ -47,7 +51,7 @@ SWEEP_CONFIG = {
     },
     "parameters": {
         "model": {
-            "value": "convnext_base"
+            "value": model_name
         },
         "batch_size": {
             "values": [16, 32, 64]

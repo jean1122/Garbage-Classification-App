@@ -11,7 +11,7 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 13
+NUM_RUNS = 5
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
 WANDB_USERNAME = "Richard"
@@ -41,6 +41,8 @@ SWEEP_ID = {
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     # 'convnext_small': 'c22earkk',
+    # new convnnext small id
+    'convnext_small': '9bdpzmc5',
     'convnext_base': 'jl4l1frd',
     'convnext_large': '9rrdpjzq',
     'vit_b16': '86a3oe18'

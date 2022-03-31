@@ -43,6 +43,7 @@ SWEEP_ID = {
     'efficientnet_b2' : '3pw3zblp',
     'efficientnet_b5' : 'hb7854nx',
     'efficientnet_b6' : '1rbfrjah',
+    'efficientnet_b7': '5y7e6h0w',
     'resnet50': 'unica3u2'
     
 }

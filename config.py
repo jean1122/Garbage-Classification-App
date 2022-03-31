@@ -33,12 +33,18 @@ SWEEP_ID = {
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
+    'resnet18': 'or65vt0h',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     'convnext_small': 'c22earkk',
     'convnext_base': 'jl4l1frd',
     'convnext_large': '9rrdpjzq',
-    'vit_b16': '86a3oe18'
+    'vit_b16': '86a3oe18',
+    'efficientnet_b2' : '3pw3zblp',
+    'efficientnet_b5' : 'hb7854nx',
+    'efficientnet_b6' : '1rbfrjah',
+    'resnet50': 'unica3u2'
+    
 }
 
 model_name = 'resnet152'

@@ -10,9 +10,9 @@ torch.manual_seed(42)
 
 wandb.login()
 
-batch_size = -1 # Set to desired batch_size
-learning_rate = -1 # Set to desired learning_rate
-model_name = '' # Set to model name
+batch_size = 64 # Set to desired batch_size
+learning_rate = 0.0014792348278818 # Set to desired learning_rate
+model_name = 'convnext_base' # Set to model name
 assert model_name in models.model_dict
 
 wandb.init()  # required to have access to `wandb.config`

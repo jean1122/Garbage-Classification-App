@@ -29,6 +29,8 @@ SWEEP_ID = {
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
+    'efficientnet_b3': 'wuijc7ag',
+    'resnet18': 'or65vt0h',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     'convnext_small': 'c22earkk',

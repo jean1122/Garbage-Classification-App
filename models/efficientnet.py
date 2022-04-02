@@ -23,7 +23,7 @@ class TrashEfficientnet(TrashBaseClass):
         p_dropout = backbone.classifier[0].p
         num_filters = backbone.classifier[-1].in_features
         layers = list(backbone.children())[:-1]
-        self.feature_extractor = nn.Sequential(*layers)
+        self.backbone = nn.Sequential(*layers)
 
         num_target_classes = config.NUM_CLASSES
         self.classifier = nn.Sequential(
@@ -32,9 +32,7 @@ class TrashEfficientnet(TrashBaseClass):
         )
 
     def get_features(self, x):
-        self.feature_extractor.eval()
-        with torch.no_grad():
-            x = self.feature_extractor(x).flatten(1)
+        x = self.backbone(x).flatten(1)
         return x
 
     def forward(self, x):

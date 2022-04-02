@@ -1,8 +1,7 @@
-import torch
 import matplotlib.pyplot as plt
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
+from pytorch_lightning.callbacks import BackboneFinetuning
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from dataset import *
 import wandb
@@ -32,8 +31,10 @@ def sweep_iteration():
         transfer_learning=model_cls.transfer_learning, batch_size=wandb.config.batch_size)
 
     stop_checkpoint = EarlyStopping('val_loss', patience=8)
+    backbone_fine_tuning = BackboneFinetuning(config.START_BACKBONE_TUNING_EPOCH, lambda epoch: 1.25)
     trainer = pl.Trainer(max_epochs=config.EPOCHS, logger=wandb_logger, gpus=config.NUM_GPUS,
-                         log_every_n_steps=config.LOG_EVERY_N_STEPS, callbacks=[stop_checkpoint], profiler="simple")
+                         log_every_n_steps=config.LOG_EVERY_N_STEPS, callbacks=[stop_checkpoint, backbone_fine_tuning],
+                         profiler="simple", enable_checkpointing=False)
     wandb.watch(model)
     trainer.fit(model, dm)
 
@@ -41,7 +42,10 @@ def sweep_iteration():
 check_models_exist(config.SWEEP_CONFIG)
 
 model_name = config.SWEEP_CONFIG['parameters']['model']['value']
-if model_name in config.SWEEP_ID:
+
+sweepID = config.SWEEP_ID if config.PROJECT_NAME == 'trash-ai' else config.SWEEP_ID_BACKBONE
+
+if model_name in sweepID:
     sweep_id = f'{config.PROJECT_NAME}/{config.SWEEP_ID[model_name]}'
 else:
     sweep_id = wandb.sweep(config.SWEEP_CONFIG, project=config.PROJECT_NAME)

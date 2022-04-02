@@ -20,10 +20,6 @@ class TrashBaseClass(pl.LightningModule):
     def __init_subclass__(cls):
         cls.model_dict[cls.get_name(config.REMOVE_PREFIX)] = cls
 
-    def to_one_hot(self, x, ref):
-        temp = torch.zeros(x.size(0), config.NUM_CLASSES).type_as(ref)
-        return temp.scatter_(1, x.unsqueeze(1), 1.0)
-
     def save_metrics(self, metric, mode, pred, labels, loss):
         metric(pred, labels)
         metrics = {f'{mode}_accuracy': metric, f'{mode}_loss': loss}
@@ -31,8 +27,7 @@ class TrashBaseClass(pl.LightningModule):
         return metrics
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(
-            self.parameters(), lr=self.hparams.lr, betas=(config.B1, config.B2))
+        optimizer = torch.optim.AdamW(filter(lambda p: p.requires_grad, self.parameters()), lr=self.hparams.lr, betas=(config.B1, config.B2))
         lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
         return {
             'optimizer': optimizer,
@@ -59,9 +54,8 @@ class TrashBaseClass(pl.LightningModule):
 
     def forward_step(self, batch):
         imgs, labels = batch
-        one_hot_labels = self.to_one_hot(labels, imgs)
         pred = self(imgs).squeeze()
-        loss = F.cross_entropy(pred, one_hot_labels)
+        loss = F.cross_entropy(pred, labels)
         return pred, loss, labels
 
     def training_step(self, batch, batch_idx):

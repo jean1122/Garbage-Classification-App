@@ -37,9 +37,7 @@ class TrashVit(TrashBaseClass):
         self.classifier = nn.Linear(num_filters, num_target_classes)
 
     def get_features(self, x):
-        self.backbone.eval()
-        with torch.no_grad():
-            x = self.backbone(x).flatten(1)
+        x = self.backbone(x).flatten(1)
         return x
 
     def forward(self, x):

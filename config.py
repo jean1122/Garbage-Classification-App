@@ -11,19 +11,15 @@ B1 = 0.9
 B2 = 0.99
 NUM_GPUS = 1
 FIGURE_SIZE = 12
-NUM_RUNS = 19
+NUM_RUNS = 15
 LOG_EVERY_N_STEPS = 10
 REMOVE_PREFIX = True
-
-LOG_TRAIN_STEP_ACCURACY = True
-LOG_TRAIN_EPOCH_ACCURACY = True
-LOG_VAL_STEP_ACCURACY = True
-LOG_VAL_EPOCH_ACCURACY = True
+START_BACKBONE_TUNING_EPOCH = 25
 
 CHECKPOINT_DIR = 'checkpoints'
 ROOT_DIR = '/mnt/d/Datasets/trashnet/resized'
 
-PROJECT_NAME = 'trash-ai'
+PROJECT_NAME = 'trash-ai-backbone-fine-tuning'
 
 # Dictionary that stores the W&B sweep ids. After training a model,
 # place the model name and sweep id in this dictionary, so that the same
@@ -33,22 +29,22 @@ SWEEP_ID = {
     'efficientnet_b7': 'gnijdvsm',
     'efficientnet_b1' : 'dz3xe8aj',
     'efficientnet_b0': 'rwb5lurg',
-    'resnet18': 'or65vt0h',
     'resnet152': '7urzgc8j',
     'convnext_tiny': 'cdhofwn6',
     'convnext_small': 'c22earkk',
     'convnext_base': 'jl4l1frd',
-    'convnext_large': '9rrdpjzq',
-    'vit_b16': '86a3oe18',
-    'efficientnet_b2' : '3pw3zblp',
-    'efficientnet_b5' : 'hb7854nx',
-    'efficientnet_b6' : '1rbfrjah',
-    'efficientnet_b7': '5y7e6h0w',
-    'resnet50': 'unica3u2'
-    
+    'convnext_large': 'luemjuu7',
+    'vit_b16': 'eljnsu2y',
+    'vit_b32': 'otls3zlv',
+    'vit_l16': 'ih9w5chx',
+    'vit_l32': 'memzurmx'
 }
 
-model_name = 'resnet152'
+SWEEP_ID_BACKBONE = {
+
+}
+
+model_name = 'resnet18'
 
 SWEEP_CONFIG = {
     "method": "bayes",

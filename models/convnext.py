@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 import config
 
@@ -22,20 +21,14 @@ class TrashConvnext(TrashBaseClass):
         backbone = model_list[self.convnext_model](pretrained=True)
         num_filters = backbone.classifier[-1].in_features
         layers = list(backbone.children())[:-1]
-        self.feature_extractor = nn.Sequential(*layers)
+        self.backbone = nn.Sequential(*layers)
 
         num_target_classes = config.NUM_CLASSES
         self.classifier = nn.Linear(num_filters, num_target_classes)
 
-    def get_features(self, x):
-        self.feature_extractor.eval()
-        with torch.no_grad():
-            x = self.feature_extractor(x).flatten(1)
-        return x
-
     def forward(self, x):
-        representations = self.get_features(x)
-        x = self.classifier(representations)
+        x = self.backbone(x).flatten(1)
+        x = self.classifier(x)
         return x
 
 

@@ -40,11 +40,7 @@ SWEEP_ID = {
     'vit_l32': 'memzurmx'
 }
 
-SWEEP_ID_BACKBONE = {
-
-}
-
-model_name = 'resnet18'
+model_name = 'convnext_large'
 
 SWEEP_CONFIG = {
     "method": "bayes",
